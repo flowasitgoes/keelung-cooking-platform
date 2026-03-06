@@ -15,9 +15,24 @@
     </header>
 
     <section class="section form-section">
+      <div class="steps steps--chef">
+        <h3 class="steps__title">如何成為主廚 How to Become a Chef</h3>
+        <ol class="steps__list">
+          <li>填寫下方表單（姓名、年齡、拿手菜、經驗、地點、可授課時間）</li>
+          <li>我們會與您聯絡確認</li>
+          <li>確認後即可在平台上開課</li>
+        </ol>
+        <p class="steps__en">Fill the form below → We contact you → Your class goes live.</p>
+      </div>
+      <p class="form-intro">填寫以下表單申請成為主廚／開課。請提供姓名、年齡、拿手菜、經驗、地點與可授課時間。<br><span class="form-intro-en">Submit the form below to offer a class. Fields: Name, Age, Signature dish, Cooking experience, Location, Available teaching times.</span></p>
+      <div class="form-placeholder form-placeholder--chef" id="chef-form-placeholder">
+        <p class="form-placeholder__title">尚未設定主廚表單</p>
+        <p class="form-placeholder__text">請在 <strong>www/app.js</strong> 中設定 <strong>CHEF_FORM_URL</strong> 為你的 Google 表單嵌入網址（表單 → 傳送 → 嵌入 HTML 的 src，需含 <code>?embedded=true</code>）。</p>
+        <p class="form-placeholder__text form-placeholder__text--en">No form set yet. In <strong>www/app.js</strong> set <strong>CHEF_FORM_URL</strong> to your Google Form embed URL (Form → Send → embed HTML src, include <code>?embedded=true</code>).</p>
+        <p class="form-placeholder__note">不需要事先準備表單給開發者，只要建立好表單後把連結貼到 app.js 即可。</p>
+      </div>
       <div class="form-embed" id="chef-form-container">
-        <p class="form-placeholder" id="chef-form-placeholder">請在 <code>app.js</code> 中將 <code>CHEF_FORM_URL</code> 改為您的 Google 表單嵌入網址。Replace <code>CHEF_FORM_URL</code> in <code>app.js</code> with your Google Form embed URL.</p>
-        <iframe id="chef-form-iframe" title="主廚開課表單" style="display:none"></iframe>
+        <iframe id="chef-form-iframe" title="主廚開課表單"></iframe>
       </div>
     </section>
   </main>
@@ -44,12 +59,15 @@
   <script src="./app.js"></script>
   <script>
     (function() {
+      var url = window.CHEF_FORM_URL;
+      var placeholderEl = document.getElementById('chef-form-placeholder');
+      var containerEl = document.getElementById('chef-form-container');
       var iframe = document.getElementById('chef-form-iframe');
-      var placeholder = document.getElementById('chef-form-placeholder');
-      var url = window.CHEF_FORM_URL || '';
-      if (url && url.indexOf('placeholder') === -1) {
-        if (iframe) { iframe.src = url; iframe.style.display = 'block'; }
-        if (placeholder) placeholder.style.display = 'none';
+      if (url && !window.FORM_IS_PLACEHOLDER(url)) {
+        if (placeholderEl) placeholderEl.style.display = 'none';
+        if (iframe) iframe.src = url;
+      } else {
+        if (containerEl) containerEl.style.display = 'none';
       }
     })();
   </script>

@@ -1,93 +1,76 @@
-# Keelung Cooking School（基隆料理教室）
+# 基隆料理教室 Keelung Cooking School
 
-Mobile-first MVP 靜態網站：串接基隆銀髮主廚與學員，可部署至 Vercel，並以 Capacitor 打包成 Android App。
+連結基隆 50–80+ 歲的在地主廚與想學做菜的學員，以靜態網站呈現課程瀏覽與報名／開課表單（Google Form 嵌入）。
+
+## 本地開發
+
+```bash
+npm install
+npm start
+```
+
+瀏覽 [http://localhost:3000](http://localhost:3000)。靜態檔案來自 `www/`，以 **npm start** 啟動（`serve www -l 3000`）。
 
 ## 專案結構
 
-- `www/`：所有靜態資源（Capacitor 的 webDir、Vercel 的輸出目錄）
-  - `index.html`：首頁與精選課程
+- `www/`：所有靜態資源（Capacitor 與 Vercel 皆以此為根）
+  - `index.html`：首頁（Hero + 精選課程）
   - `courses.html`：課程列表
-  - `student.html`：學員報名（嵌入 Google 表單）
-  - `chef.html`：主廚開課（嵌入 Google 表單）
-  - `style.css`、`app.js`、`sw.js`、`manifest.webmanifest`
-  - `assets/icons/`、`assets/images/`
+  - `student.html`：學員報名（嵌入 Google Form）
+  - `chef.html`：主廚開課（嵌入 Google Form）
+  - `style.css` / `app.js`：樣式與導覽、課程渲染、SW 註冊
+  - `sw.js`：Service Worker（離線快取靜態資源）
+  - `manifest.webmanifest`：PWA 設定
+  - `assets/icons/`、`assets/images/`：圖示與課程佔位圖
 
 ## 替換 Google Form 嵌入網址
 
-1. 在 **Google 表單** 建立兩份表單（學員報名、主廚開課），取得「嵌入」的 iframe 網址（格式如 `https://docs.google.com/forms/d/e/xxxxx/viewform?embedded=true`）。
-2. 開啟 `www/app.js`，在檔案最上方找到：
-   - `STUDENT_FORM_URL`：改為學員報名表單的嵌入網址。
-   - `CHEF_FORM_URL`：改為主廚開課表單的嵌入網址。
-3. 若留空或仍為佔位字串，表單頁會顯示說明文字，不會載入 iframe。
+1. 在 **www/app.js** 最上方找到：
+   - `STUDENT_FORM_URL`（學員報名表）
+   - `CHEF_FORM_URL`（主廚開課表）
+2. 將兩個變數改為你的 Google Form **嵌入網址**（表單 → 傳送 → 嵌入 HTML 中的 `src`，且網址需含 `?embedded=true`）。
+3. 存檔後重新整理 `student.html` / `chef.html` 即可。
 
-建議表單欄位：
+範例：
 
-- **學員**：姓名、Email、電話、想學的菜、可上課時間。
-- **主廚**：姓名、年齡、拿手菜、料理經驗、所在區域、可授課時間。
-
-## 本地預覽
-
-在專案根目錄執行：
-
-```bash
-npx serve www -l 3000
+```js
+var STUDENT_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSe.../viewform?embedded=true';
+var CHEF_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSf.../viewform?embedded=true';
 ```
-
-或使用其他靜態伺服器，根目錄指向 `www`。開啟 `http://localhost:3000`。
 
 ## Vercel 部署
 
-1. 將專案推送到 Git（GitHub / GitLab / Bitbucket）。
-2. 在 [Vercel](https://vercel.com) 匯入該 repo。
-3. 設定：
-   - **Root Directory**：維持專案根目錄（不要選 `www`）。
-   - **Output Directory**：設為 `www`（或依 `vercel.json` 的 `outputDirectory`）。
-4. 若使用根目錄的 `vercel.json`，已指定 `outputDirectory: "www"`，Vercel 會以 `www` 為靜態輸出，直接部署。
-5. 部署後可透過 `/courses.html`、`/student.html`、`/chef.html` 存取各頁。
+- 本專案為**純靜態站**，無 build 步驟。
+- 在 Vercel 專案設定中將 **Root Directory** 設為 `www`（或使用根目錄的 `vercel.json`，其內已指定 `outputDirectory: "www"`）。
+- 部署後路徑對應為：
+  - `/` → `index.html`
+  - `/courses.html`、`/student.html`、`/chef.html` 直接對應同名檔案。
 
 ## Capacitor Android 打包
 
 1. 安裝 Capacitor（若尚未安裝）：
    ```bash
-   npm init -y
-   npm install @capacitor/core @capacitor/cli @capacitor/android
+   npm install @capacitor/core @capacitor/cli
+   npx cap init
    ```
-
-2. 初始化（App 名稱與 ID 可自訂）：
-   ```bash
-   npx cap init "Keelung Cooking School" com.keelung.cookingschool
-   ```
-
-3. 在 `capacitor.config.ts`（或 `capacitor.config.json`）中設定：
+2. 設定 **webDir** 為 `www`（在 `capacitor.config.ts` 或 `capacitor.config.json`）：
    ```json
    {
+     "appId": "com.keelung.cooking",
+     "appName": "Keelung Cooking School",
      "webDir": "www"
    }
    ```
-
-4. 加入 Android 並同步：
+3. 加入 Android 並同步：
    ```bash
    npx cap add android
    npx cap copy
-   ```
-
-5. 以 Android Studio 開啟並建置：
-   ```bash
    npx cap open android
    ```
-
-注意事項：
-
-- 所有連結與資源均使用相對路徑（如 `./courses.html`、`./assets/...`），以便在 WebView 內正常運作。
-- 若表單使用 Google Form iframe，需有網路連線才能載入表單內容。
+4. 在 Android Studio 中建置並執行。所有連結與資源均使用相對路徑（如 `./assets/...`），適合 WebView 與離線靜態資源。
 
 ## 技術說明
 
-- 純靜態 HTML/CSS/JS，無建置步驟。
-- 課程資料目前寫在 `www/app.js` 的 `courses` 陣列，可改為從後端或 JSON 載入。
-- Service Worker（`www/sw.js`）會快取靜態資源，離線可開啟頁面；表單 iframe 為外部網址，離線時無法載入屬正常。
-
-## 授權
-
-依專案需求自訂。
-# keelung-cooking-platform
+- **Mobile-first**：底部導覽、大觸控目標、卡片式課程列表。
+- **離線**：Service Worker 快取 HTML/CSS/JS 與靜態資產；表單 iframe 為外部網址，離線時可能無法載入。
+- **路徑**：全站使用相對路徑，方便 Vercel 與 Capacitor 共用同一份 `www/` 產物。

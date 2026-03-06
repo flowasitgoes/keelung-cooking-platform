@@ -16,9 +16,24 @@
     </header>
 
     <section class="section form-section">
+      <div class="steps steps--student">
+        <h3 class="steps__title">如何加入學員 How to Join as Student</h3>
+        <ol class="steps__list">
+          <li>瀏覽課程並選擇想學的菜色</li>
+          <li>填寫下方報名表（姓名、Email、電話、想學的菜、可配合時間）</li>
+          <li>我們會安排您與主廚聯絡</li>
+        </ol>
+        <p class="steps__en">Browse courses → Fill the form → We connect you with a chef.</p>
+      </div>
+      <p class="form-intro">填寫以下表單報名學員。請提供姓名、Email、電話、想學的菜色與可配合時間。<br><span class="form-intro-en">Submit the form below to register. Fields: Name, Email, Phone, Dish you want to learn, Available time.</span></p>
+      <div class="form-placeholder form-placeholder--student" id="student-form-placeholder">
+        <p class="form-placeholder__title">尚未設定報名表單</p>
+        <p class="form-placeholder__text">請在 <strong>www/app.js</strong> 中設定 <strong>STUDENT_FORM_URL</strong> 為你的 Google 表單嵌入網址（表單 → 傳送 → 嵌入 HTML 的 src，需含 <code>?embedded=true</code>）。</p>
+        <p class="form-placeholder__text form-placeholder__text--en">No form set yet. In <strong>www/app.js</strong> set <strong>STUDENT_FORM_URL</strong> to your Google Form embed URL (Form → Send → embed HTML src, include <code>?embedded=true</code>).</p>
+        <p class="form-placeholder__note">不需要事先準備表單給開發者，只要建立好表單後把連結貼到 app.js 即可。</p>
+      </div>
       <div class="form-embed" id="student-form-container">
-        <p class="form-placeholder" id="student-form-placeholder">請在 <code>app.js</code> 中將 <code>STUDENT_FORM_URL</code> 改為您的 Google 表單嵌入網址。Replace <code>STUDENT_FORM_URL</code> in <code>app.js</code> with your Google Form embed URL.</p>
-        <iframe id="student-form-iframe" title="學員報名表單" style="display:none"></iframe>
+        <iframe id="student-form-iframe" title="學員報名表單"></iframe>
       </div>
     </section>
   </main>
@@ -49,15 +64,19 @@
       var course = params.get('course');
       var hint = document.getElementById('student-course-hint');
       if (course && hint) {
-        hint.textContent = '你想學：' + decodeURIComponent(course);
+        var decoded = decodeURIComponent(course);
+        hint.textContent = '你想學：' + decoded + ' / You want to learn: ' + decoded;
         hint.classList.add('form-hint--visible');
       }
+      var url = window.STUDENT_FORM_URL;
+      var placeholderEl = document.getElementById('student-form-placeholder');
+      var containerEl = document.getElementById('student-form-container');
       var iframe = document.getElementById('student-form-iframe');
-      var placeholder = document.getElementById('student-form-placeholder');
-      var url = window.STUDENT_FORM_URL || '';
-      if (url && url.indexOf('placeholder') === -1) {
-        if (iframe) { iframe.src = url; iframe.style.display = 'block'; }
-        if (placeholder) placeholder.style.display = 'none';
+      if (url && !window.FORM_IS_PLACEHOLDER(url)) {
+        if (placeholderEl) placeholderEl.style.display = 'none';
+        if (iframe) iframe.src = url;
+      } else {
+        if (containerEl) containerEl.style.display = 'none';
       }
     })();
   </script>

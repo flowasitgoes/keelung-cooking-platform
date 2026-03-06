@@ -8,18 +8,14 @@ var urlsToCache = [
   './style.css',
   './app.js',
   './manifest.webmanifest',
-  './assets/icons/icon-192.svg',
+  './assets/icons/icon-192.png',
   './assets/images/placeholder.svg'
 ];
 
 self.addEventListener('install', function(event) {
-  var base = self.location.origin + self.location.pathname.replace(/\/sw\.js$/, '/');
   event.waitUntil(
     caches.open(CACHE_NAME).then(function(cache) {
-      return Promise.all(urlsToCache.map(function(u) {
-        var full = u.startsWith('http') ? u : base + u.replace(/^\.\//, '');
-        return fetch(full).then(function(r) { return cache.put(full, r); }).catch(function() {});
-      }));
+      return cache.addAll(urlsToCache).catch(function(err) { console.warn('SW precache:', err); });
     })
   );
   self.skipWaiting();
@@ -29,13 +25,7 @@ self.addEventListener('fetch', function(event) {
   if (event.request.url.indexOf(self.location.origin) !== 0) return;
   event.respondWith(
     caches.match(event.request).then(function(response) {
-      return response || fetch(event.request).then(function(r) {
-        var clone = r.clone();
-        if (r.status === 200 && event.request.method === 'GET') {
-          caches.open(CACHE_NAME).then(function(cache) { cache.put(event.request, clone); });
-        }
-        return r;
-      });
+      return response || fetch(event.request);
     })
   );
 });
