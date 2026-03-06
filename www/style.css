@@ -50,6 +50,16 @@ body {
   margin: 0 0 0.5rem;
 }
 
+.hero__banner {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  margin: 1rem auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+}
+
 .hero__subtitle {
   font-size: 1rem;
   color: var(--color-text-muted);
