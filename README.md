@@ -69,6 +69,26 @@ var CHEF_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSf.../viewform?emb
    ```
 4. 在 Android Studio 中建置並執行。所有連結與資源均使用相對路徑（如 `./assets/...`），適合 WebView 與離線靜態資源。
 
+## SEO 與縮圖
+
+### 上線前請替換網址
+
+各 HTML 頁面中的 `https://yoursite.com` 請改為你的正式網址（例如 Vercel 網址），否則 canonical、og:url、og:image 等會指向錯誤。搜尋：`yoursite.com` 一次替換即可。
+
+### 需要的縮圖尺寸（請放入 `www/assets/` 對應路徑）
+
+| 用途 | 尺寸 | 檔名 | 路徑 |
+|------|------|------|------|
+| **Favicon（瀏覽器分頁圖示）** | 16×16 px | favicon-16x16.png | `www/assets/icons/favicon-16x16.png` |
+| **Favicon** | 32×32 px | favicon-32x32.png | `www/assets/icons/favicon-32x32.png` |
+| **Apple 加到主畫面圖示** | 180×180 px | apple-touch-icon-180x180.png | `www/assets/icons/apple-touch-icon-180x180.png` |
+| **PWA / Android 圖示** | 192×192 px | icon-192.png | `www/assets/icons/icon-192.png`（已有佔位） |
+| **PWA 啟動畫面** | 512×512 px | icon-512x512.png | `www/assets/icons/icon-512x512.png` |
+| **社群分享預覽圖（FB、LINE、Twitter）** | 1200×630 px | og-1200x630.png | `www/assets/images/og-1200x630.png` |
+
+- **Favicon**：可用同一張圖縮成 16、32，或只提供 32×32 再於各頁改為單一 link。
+- **OG 圖**：1200×630 為建議比例，可放 Logo + 標語或課程示意，避免重要文字貼邊。
+
 ## 技術說明
 
 - **Mobile-first**：底部導覽、大觸控目標、卡片式課程列表。

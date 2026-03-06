@@ -1,10 +1,11 @@
-var CACHE_NAME = 'keelung-cooking-v1';
+var CACHE_NAME = 'keelung-cooking-v2';
 
 var urlsToCache = [
   '/index.html',
   '/courses.html',
   '/student.html',
   '/chef.html',
+  '/about.html',
   '/style.css',
   '/app.js',
   '/manifest.webmanifest',
@@ -21,15 +22,29 @@ self.addEventListener('install', function(event) {
   self.skipWaiting();
 });
 
+function isCriticalResource(req) {
+  var u = req.url;
+  return req.mode === 'navigate' ||
+    u.indexOf('/style.css') !== -1 ||
+    u.indexOf('/app.js') !== -1 ||
+    u.indexOf('.html') !== -1 ||
+    u.indexOf('/manifest.webmanifest') !== -1;
+}
+
 self.addEventListener('fetch', function(event) {
   if (event.request.url.indexOf(self.location.origin) !== 0) return;
-  var isNav = event.request.mode === 'navigate';
-  var isJs = event.request.url.indexOf('/app.js') !== -1;
-  if (isNav || isJs) {
+  if (event.request.method !== 'GET') return;
+  if (isCriticalResource(event.request)) {
     event.respondWith(
-      fetch(event.request).catch(function() {
-        return caches.match(event.request);
-      })
+      fetch(event.request)
+        .then(function(res) {
+          var clone = res.clone();
+          caches.open(CACHE_NAME).then(function(cache) { cache.put(event.request, clone); });
+          return res;
+        })
+        .catch(function() {
+          return caches.match(event.request);
+        })
     );
     return;
   }

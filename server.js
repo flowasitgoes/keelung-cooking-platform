@@ -47,6 +47,9 @@ const server = http.createServer((req, res) => {
     const ext = path.extname(filePath);
     const type = MIME[ext] || 'application/octet-stream';
     res.setHeader('Content-Type', type);
+    if (['.html', '.css', '.js', '.webmanifest'].indexOf(ext) !== -1 || path.basename(filePath) === 'sw.js') {
+      res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+    }
     res.writeHead(200);
     res.end(data);
   });
