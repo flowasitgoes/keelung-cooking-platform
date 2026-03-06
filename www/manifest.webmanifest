@@ -1,13 +1,13 @@
 {
   "name": "Keelung Cooking School",
   "short_name": "基隆料理教室",
-  "start_url": "./index.html",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#f5f0e8",
   "theme_color": "#d97d54",
   "icons": [
     {
-      "src": "./assets/icons/icon-192.png",
+      "src": "/assets/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     }

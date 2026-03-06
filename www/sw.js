@@ -1,15 +1,15 @@
 var CACHE_NAME = 'keelung-cooking-v1';
 
 var urlsToCache = [
-  './index.html',
-  './courses.html',
-  './student.html',
-  './chef.html',
-  './style.css',
-  './app.js',
-  './manifest.webmanifest',
-  './assets/icons/icon-192.png',
-  './assets/images/placeholder.svg'
+  '/index.html',
+  '/courses.html',
+  '/student.html',
+  '/chef.html',
+  '/style.css',
+  '/app.js',
+  '/manifest.webmanifest',
+  '/assets/icons/icon-192.png',
+  '/assets/images/placeholder.svg'
 ];
 
 self.addEventListener('install', function(event) {
@@ -23,6 +23,16 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('fetch', function(event) {
   if (event.request.url.indexOf(self.location.origin) !== 0) return;
+  var isNav = event.request.mode === 'navigate';
+  var isJs = event.request.url.indexOf('/app.js') !== -1;
+  if (isNav || isJs) {
+    event.respondWith(
+      fetch(event.request).catch(function() {
+        return caches.match(event.request);
+      })
+    );
+    return;
+  }
   event.respondWith(
     caches.match(event.request).then(function(response) {
       return response || fetch(event.request);
