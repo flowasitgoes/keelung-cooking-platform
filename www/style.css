@@ -1,0 +1,315 @@
+/* Keelung Cooking School – design system & layout */
+:root {
+  --color-beige: #f5f0e8;
+  --color-beige-dark: #e8e0d5;
+  --color-wood: #c4a77d;
+  --color-wood-light: #d4b896;
+  --color-orange: #d97d54;
+  --color-orange-soft: #e8a88a;
+  --color-green: #7d9b76;
+  --color-green-muted: #9bb396;
+  --color-text: #3d3630;
+  --color-text-muted: #6b635b;
+  --shadow-soft: 0 4px 12px rgba(61, 54, 48, 0.08);
+  --shadow-card: 0 8px 24px rgba(61, 54, 48, 0.1);
+  --radius: 16px;
+  --nav-height: 64px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--color-beige);
+  color: var(--color-text);
+  min-height: 100vh;
+  padding-bottom: var(--nav-height);
+}
+
+.page {
+  min-height: calc(100vh - var(--nav-height));
+  padding: 1rem;
+}
+
+.hero {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+}
+
+.hero__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 0.5rem;
+}
+
+.hero__subtitle {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin: 0 0 1rem;
+}
+
+.hero__tagline, .hero__tagline-en {
+  font-size: 0.95rem;
+  color: var(--color-wood);
+  margin: 0.25rem 0;
+}
+
+.hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 320px;
+  margin: 2rem auto 0;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.875rem 1.5rem;
+  min-height: 44px;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--primary {
+  background: var(--color-orange);
+  color: #fff;
+  box-shadow: var(--shadow-soft);
+}
+
+.btn--primary:hover {
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.btn--secondary {
+  background: var(--color-wood-light);
+  color: var(--color-text);
+}
+
+.btn--secondary:hover {
+  background: var(--color-wood);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--color-green);
+  border: 2px solid var(--color-green-muted);
+}
+
+.btn--outline:hover {
+  background: var(--color-green-muted);
+  color: #fff;
+}
+
+.section {
+  margin: 2rem 0;
+}
+
+.section__title {
+  font-size: 1.25rem;
+  margin: 0 0 1rem;
+  color: var(--color-text);
+}
+
+.section__cta {
+  display: block;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.page-header {
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.page-header__title {
+  font-size: 1.5rem;
+  margin: 0 0 0.25rem;
+}
+
+.page-header__subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.course-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.card:active {
+  transform: scale(0.99);
+}
+
+.card__image {
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  display: block;
+}
+
+.card__body {
+  padding: 1rem;
+}
+
+.card__title {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+}
+
+.card__meta {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0.25rem 0;
+}
+
+.card__price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-orange);
+  margin: 0.5rem 0;
+}
+
+.card .btn {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.form-hint {
+  display: none;
+  font-size: 0.9rem;
+  color: var(--color-green);
+  margin: 0.5rem 0 0;
+}
+
+.form-hint--visible {
+  display: block;
+}
+
+.form-section {
+  flex: 1;
+}
+
+.form-embed {
+  width: 100%;
+  min-height: 500px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--color-beige-dark);
+}
+
+.form-embed iframe {
+  width: 100%;
+  height: 600px;
+  border: 0;
+  display: block;
+}
+
+.form-placeholder {
+  padding: 2rem 1rem;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  line-height: 1.6;
+}
+
+.form-placeholder code {
+  background: var(--color-beige-dark);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  background: #fff;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 100;
+}
+
+.bottom-nav__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  min-height: 44px;
+  text-decoration: none;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  transition: color 0.2s, background 0.2s;
+}
+
+.bottom-nav__item:hover,
+.bottom-nav__item.is-active {
+  color: var(--color-orange);
+  background: var(--color-beige);
+}
+
+.bottom-nav__label-en {
+  font-size: 0.65rem;
+  opacity: 0.8;
+}
+
+@media (min-width: 600px) {
+  .course-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 900px) {
+  .course-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

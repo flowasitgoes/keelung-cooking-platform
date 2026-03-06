@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>主廚開課 | Keelung Cooking School</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="manifest" href="./manifest.webmanifest">
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <h1 class="page-header__title">主廚開課</h1>
+      <p class="page-header__subtitle">Become a Chef / Submit a Class</p>
+    </header>
+
+    <section class="section form-section">
+      <div class="form-embed" id="chef-form-container">
+        <p class="form-placeholder" id="chef-form-placeholder">請在 <code>app.js</code> 中將 <code>CHEF_FORM_URL</code> 改為您的 Google 表單嵌入網址。Replace <code>CHEF_FORM_URL</code> in <code>app.js</code> with your Google Form embed URL.</p>
+        <iframe id="chef-form-iframe" title="主廚開課表單" style="display:none"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="主要導覽">
+    <a href="./index.html" class="bottom-nav__item" data-page="index">
+      <span class="bottom-nav__label">首頁</span>
+      <span class="bottom-nav__label-en">Home</span>
+    </a>
+    <a href="./courses.html" class="bottom-nav__item" data-page="courses">
+      <span class="bottom-nav__label">課程</span>
+      <span class="bottom-nav__label-en">Courses</span>
+    </a>
+    <a href="./student.html" class="bottom-nav__item" data-page="student">
+      <span class="bottom-nav__label">加入</span>
+      <span class="bottom-nav__label-en">Join</span>
+    </a>
+    <a href="./chef.html" class="bottom-nav__item" data-page="chef">
+      <span class="bottom-nav__label">教學</span>
+      <span class="bottom-nav__label-en">Teach</span>
+    </a>
+  </nav>
+
+  <script src="./app.js"></script>
+  <script>
+    (function() {
+      var iframe = document.getElementById('chef-form-iframe');
+      var placeholder = document.getElementById('chef-form-placeholder');
+      var url = window.CHEF_FORM_URL || '';
+      if (url && url.indexOf('placeholder') === -1) {
+        if (iframe) { iframe.src = url; iframe.style.display = 'block'; }
+        if (placeholder) placeholder.style.display = 'none';
+      }
+    })();
+  </script>
+</body>
+</html>

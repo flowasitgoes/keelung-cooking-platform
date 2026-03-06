@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>學員報名 | Keelung Cooking School</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="manifest" href="./manifest.webmanifest">
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <h1 class="page-header__title">學員報名</h1>
+      <p class="page-header__subtitle">Join as Student</p>
+      <p class="form-hint" id="student-course-hint"></p>
+    </header>
+
+    <section class="section form-section">
+      <div class="form-embed" id="student-form-container">
+        <p class="form-placeholder" id="student-form-placeholder">請在 <code>app.js</code> 中將 <code>STUDENT_FORM_URL</code> 改為您的 Google 表單嵌入網址。Replace <code>STUDENT_FORM_URL</code> in <code>app.js</code> with your Google Form embed URL.</p>
+        <iframe id="student-form-iframe" title="學員報名表單" style="display:none"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="主要導覽">
+    <a href="./index.html" class="bottom-nav__item" data-page="index">
+      <span class="bottom-nav__label">首頁</span>
+      <span class="bottom-nav__label-en">Home</span>
+    </a>
+    <a href="./courses.html" class="bottom-nav__item" data-page="courses">
+      <span class="bottom-nav__label">課程</span>
+      <span class="bottom-nav__label-en">Courses</span>
+    </a>
+    <a href="./student.html" class="bottom-nav__item" data-page="student">
+      <span class="bottom-nav__label">加入</span>
+      <span class="bottom-nav__label-en">Join</span>
+    </a>
+    <a href="./chef.html" class="bottom-nav__item" data-page="chef">
+      <span class="bottom-nav__label">教學</span>
+      <span class="bottom-nav__label-en">Teach</span>
+    </a>
+  </nav>
+
+  <script src="./app.js"></script>
+  <script>
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var course = params.get('course');
+      var hint = document.getElementById('student-course-hint');
+      if (course && hint) {
+        hint.textContent = '你想學：' + decodeURIComponent(course);
+        hint.classList.add('form-hint--visible');
+      }
+      var iframe = document.getElementById('student-form-iframe');
+      var placeholder = document.getElementById('student-form-placeholder');
+      var url = window.STUDENT_FORM_URL || '';
+      if (url && url.indexOf('placeholder') === -1) {
+        if (iframe) { iframe.src = url; iframe.style.display = 'block'; }
+        if (placeholder) placeholder.style.display = 'none';
+      }
+    })();
+  </script>
+</body>
+</html>
