@@ -9,8 +9,8 @@ var urlsToCache = [
   '/style.css',
   '/app.js',
   '/manifest.webmanifest',
-  '/assets/icons/icon-192.png',
-  '/assets/images/placeholder.svg'
+  '/public/assets/icons/Keelung-icon-192x192.jpg',
+  '/public/assets/images/placeholder.svg'
 ];
 
 self.addEventListener('install', function(event) {

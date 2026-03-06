@@ -43,7 +43,7 @@
     if (course.dish) joinUrl += '?course=' + encodeURIComponent(course.dish);
     var media = course.videoId
       ? '<div class="card__video"><iframe src="https://www.youtube.com/embed/' + escapeHtml(course.videoId) + '?rel=0" title="' + escapeHtml(course.dish) + ' 示意影片" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>'
-      : '<img class="card__image" src="' + (course.image || '/assets/images/placeholder.svg') + '" alt="">';
+      : '<img class="card__image" src="' + (course.image || '/public/assets/images/placeholder.svg') + '" alt="">';
     var hint = course.videoId ? '<p class="card__video-hint">影片僅供參考，由廚師親自教授此 YouTuber 所分享的這道菜，或相似的菜</p>' : '';
     var credit = course.videoId && course.channel ? '<p class="card__video-credit">Credit: ' + escapeHtml(course.channel) + ' (YouTube)</p>' : '';
     return (
