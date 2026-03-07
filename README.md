@@ -1,4 +1,4 @@
-# 基隆料理教室 Keelung Cooking School
+# 基隆料理教室 Keelung Cooking Platform
 
 連結基隆 50–80+ 歲的在地主廚與想學做菜的學員，以靜態網站呈現課程瀏覽與報名／開課表單（Google Form 嵌入）。
 
@@ -57,7 +57,7 @@ var CHEF_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSf.../viewform?emb
    ```json
    {
      "appId": "com.keelung.cooking",
-     "appName": "Keelung Cooking School",
+     "appName": "Keelung Cooking Platform",
      "webDir": "www"
    }
    ```

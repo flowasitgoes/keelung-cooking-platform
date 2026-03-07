@@ -1,4 +1,4 @@
-/* Keelung Cooking School – design system & layout */
+/* Keelung Cooking Platform – design system & layout */
 :root {
   --color-beige: #f5f0e8;
   --color-beige-dark: #e8e0d5;
@@ -492,4 +492,26 @@ body {
   .course-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* Site footer – ifunlove credit */
+.site-footer {
+  padding: 1rem var(--page-padding, 1rem) calc(var(--nav-height) + 0.5rem);
+  text-align: center;
+}
+
+.site-footer__text {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.site-footer__link {
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.site-footer__link:hover {
+  color: var(--color-wood);
 }

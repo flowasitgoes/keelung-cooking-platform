@@ -57,7 +57,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, '0.0.0.0', () => {
   console.log('');
-  console.log('  基隆料理教室 Keelung Cooking School');
+  console.log('  基隆料理教室 Keelung Cooking Platform');
   console.log('  http://localhost:' + PORT + '/');
   console.log('  http://127.0.0.1:' + PORT + '/');
   console.log('');
